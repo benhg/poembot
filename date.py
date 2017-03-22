@@ -1,5 +1,6 @@
 
 #code snippet to get today's date, open up corresponding poem file, and print
+# for example, if it's April 4th, it will open and print 4.txt
 
 import time                           
 today= time.strftime("%m/%d/%Y")  
