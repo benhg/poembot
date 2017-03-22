@@ -5,7 +5,7 @@
 import time                           
 today= time.strftime("%m/%d/%Y")  
 mm,dd,yyyy=today.split("/")
-print dd  
+#print dd  
 
 myFile="allpoems/poems/"+dd+".txt"
 
