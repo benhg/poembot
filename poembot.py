@@ -55,6 +55,7 @@ def greet():
     address and print it, with instructions to connect to Poembot remotely.
     """
 
+    PRINTER.online()
     PRINTER.println("Hello!")
     PRINTER.feed(3)
     try:
@@ -66,6 +67,7 @@ def greet():
         PRINTER.println('Connect with:')
         PRINTER.println('$ ssh pi@poembot')
         PRINTER.feed(3)
+        PRINTER.sleep()
     except socket.error:
         PRINTER.boldOn()
         PRINTER.println('Network is unreachable.')
@@ -73,6 +75,7 @@ def greet():
         PRINTER.println(
             'Connect display and keyboard for network troubleshooting.')
         PRINTER.feed(3)
+        PRINTER.sleep()
 
 
 def shutdown():
@@ -81,8 +84,10 @@ def shutdown():
     Prints a goodbye message and shuts down Poembot.
     """
 
+    PRINTER.wake()
     PRINTER.println("Goodbye!")
     PRINTER.feed(3)
+    PRINTER.offline()
     subprocess.call("sync")
     subprocess.call(["shutdown", "-h", "now"])
 
@@ -93,6 +98,7 @@ def print_poem():
     Selects a poem based on the day of the month, looks for the corresponding
     file in the poems directory, formats the author and title, and prints it.
     """
+    PRINTER.wake()
     day = time.strftime("%m/%d/%Y").split("/")[1]
     poem_path = "poems/" + day + ".txt"
     try:
@@ -112,6 +118,7 @@ def print_poem():
     PRINTER.println(author)
     PRINTER.println(poem)
     PRINTER.feed(3)
+    PRINTER.sleep()
 
 
 def main():
@@ -123,10 +130,13 @@ def main():
     """
 
     LED.set_color(RED)
-    time.sleep(30)
-    LED.set_color(YELLOW)
-    greet()
-    LED.set_color(GREEN)
+    PRINTER.online()
+    if PRINTER.hasPaper() is False:
+        shutdown()
+    else:
+        LED.set_color(YELLOW)
+        greet()
+        LED.set_color(GREEN)
 
     while True:
         if BUTTON.is_pressed():
