@@ -111,7 +111,7 @@ def print_poem():
     author = textwrap.fill(poem_lines.pop(0), width=32)
     poem = ""
     for line in poem_lines:
-        poem += textwrap.fill(line, width=32, subsequent_indent="  ") + "\n"
+        poem += textwrap.fill(line, width=42, subsequent_indent="  ") + "\n"
     PRINTER.boldOn()
     PRINTER.println(title)
     PRINTER.boldOff()
