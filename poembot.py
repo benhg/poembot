@@ -115,6 +115,7 @@ def print_poem():
     PRINTER.boldOn()
     PRINTER.println(title)
     PRINTER.boldOff()
+    PRINTER.println(author)
     PRINTER.writeBytes(0x1B, 0x21, 0x1)
     PRINTER.println(poem)
     PRINTER.feed(3)
