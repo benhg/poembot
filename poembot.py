@@ -111,11 +111,12 @@ def print_poem():
     author = textwrap.fill(poem_lines.pop(0), width=32)
     poem = ""
     for line in poem_lines:
-        poem += textwrap.fill(line, width=32, subsequent_indent="    ") + "\n"
+        poem += textwrap.fill(line, width=32, subsequent_indent="  ") + "\n"
     PRINTER.setSize('M')
     PRINTER.println(title)
     PRINTER.setSize('S')
     PRINTER.println(author)
+    PRINTER.writeBytes(0x1B, 0x21, 0x1)
     PRINTER.println(poem)
     PRINTER.feed(3)
     PRINTER.sleep()
@@ -126,7 +127,7 @@ def main():
 
     Waits a short time for Poembot to boot up, then calls greet() and monitors
     the button for short or long presses, calling tap() or hold() depending on
-    the length of the press.
+    the length of the press. Calls shutdown() if printer is out of paper.
     """
 
     LED.set_color(RED)
