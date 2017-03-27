@@ -127,17 +127,14 @@ def main():
 
     Waits a short time for Poembot to boot up, then calls greet() and monitors
     the button for short or long presses, calling tap() or hold() depending on
-    the length of the press. Calls shutdown() if printer is out of paper.
+    the length of the press.
     """
 
     LED.set_color(RED)
     PRINTER.online()
-    if PRINTER.hasPaper() is False:
-        shutdown()
-    else:
-        LED.set_color(YELLOW)
-        greet()
-        LED.set_color(GREEN)
+    LED.set_color(YELLOW)
+    greet()
+    LED.set_color(GREEN)
 
     while True:
         if BUTTON.is_pressed():
