@@ -1,23 +1,34 @@
 #!/usr/bin/python
-
-# Current time and temperature display for Raspberry Pi w/Adafruit Mini
-# Thermal Printer.  Retrieves data from DarkSky.net's API, prints current
-# conditions and time using large, friendly graphics.
-# See forecast.py for a different weather example that's all text-based.
-# Written by Adafruit Industries.  MIT license.
-#
-# Required software includes Adafruit_Thermal, Python Imaging and PySerial
-# libraries. Other libraries used are part of stock Python install.
-#
-# Resources:
-# http://www.adafruit.com/products/597 Mini Thermal Receipt Printer
-# http://www.adafruit.com/products/600 Printer starter pack
+# Selects a poem based on the date and print it.
 
 from __future__ import print_function
 from Adafruit_Thermal import *
-import Image, ImageDraw, time, urllib, json
+import time
 
-# Open connection to printer and print image
+# Choose the poem to print, by date
+mm, dd, yyyy = time.strftime("%m/%d/%Y").split("/")
+poem_path = "allpoems/poems/" + dd + ".txt"
+
+# Read the poem file
+with open(poem_path) as poem_file:
+    poem_lines = poem_file.read().splitlines()
+
+# Get the title and author (first and second lines)
+title = poem_lines.pop(0)
+author = poem_lines.pop(1)
+
+# Open connection to printer and print poem
 printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
-printer.print('hello world')
+printer.setSize('M')
+printer.println(title)
+printer.setSize('M')
+printer.println(author + "\n")
+printer.setSize('S')
+for line in lines:
+    printer.println(line)
 printer.feed(3)
+
+# Reset everything for next print
+printer.sleep()
+printer.wake()
+printer.setDefault()
