@@ -56,8 +56,10 @@ def greet():
     """
 
     PRINTER.online()
+    PRINTER.setSize('M')
     PRINTER.println("Hello!")
-    PRINTER.feed(3)
+    PRINTER.setSize('S')
+    PRINTER.println('Today is ' + time.strftime("%m/%d/%Y"))
     try:
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         my_socket.connect(('8.8.8.8', 0))
@@ -72,8 +74,6 @@ def greet():
         PRINTER.boldOn()
         PRINTER.println('Network is unreachable.')
         PRINTER.boldOff()
-        PRINTER.println(
-            'Connect display and keyboard for network troubleshooting.')
         PRINTER.feed(3)
         PRINTER.sleep()
 
@@ -112,10 +112,9 @@ def print_poem():
     poem = ""
     for line in poem_lines:
         poem += textwrap.fill(line, width=32, subsequent_indent="  ") + "\n"
-    PRINTER.setSize('M')
+    PRINTER.boldOn()
     PRINTER.println(title)
-    PRINTER.setSize('S')
-    PRINTER.println(author)
+    PRINTER.boldOff()
     PRINTER.writeBytes(0x1B, 0x21, 0x1)
     PRINTER.println(poem)
     PRINTER.feed(3)
