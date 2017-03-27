@@ -99,11 +99,11 @@ def print_poem():
         with open(poem_path) as poem_file:
             poem_lines = poem_file.read().splitlines()
         title = poem_lines.pop(0)
-        author = poem_lines.pop(1)
+        author = poem_lines.pop(0)
         PRINTER.setSize('M')
         PRINTER.println(title)
         PRINTER.setSize('M')
-        PRINTER.println(author + "\n")
+        PRINTER.println(author)
         PRINTER.setSize('S')
         for line in poem_lines:
             PRINTER.println(line)
