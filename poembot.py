@@ -27,14 +27,15 @@ LED = Squid(18, 23, 24)
 BUTTON = Button(25, debounce=0.1)
 PRINTER = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
+
 def tap():
     """Called when button is briefly tapped.
 
     Calls print_poem().
     """
-    GPIO.output(LED_PIN, GPIO.HIGH)  # LED on while working
+    LED.set_color(GREEN)
     print_poem()
-    GPIO.output(LED_PIN, GPIO.LOW)
+    LED.set_color(BLUE)
 
 
 def hold():
@@ -42,9 +43,9 @@ def hold():
 
     Calls shutdown().
     """
-    GPIO.output(LED_PIN, GPIO.HIGH)
+    LED.set_color(GREEN)
     shutdown()
-    GPIO.output(LED_PIN, GPIO.LOW)
+    LED.set_color(BLUE)
 
 
 def greet():
@@ -121,18 +122,13 @@ def main():
     LED.set_color(GREEN)
     time.sleep(30)
     greet()
-    LED.set_color(BLUE)	
-
-    # Poll initial button state and time
-    prev_button_state = GPIO.input(BUTTON_PIN)
-    prev_time = time.time()
-    tap_enable = False
-    hold_enable = False
+    LED.set_color(BLUE)
 
     # Main loop
     while True:
-	if BUTTON.is_pressed():
-	    print_poem()
+        if BUTTON.is_pressed():
+            print_poem()
+
 
 # Initialization
 if __name__ == '__main__':
