@@ -15,17 +15,16 @@ http://www.adafruit.com/products/597 Mini Thermal Receipt Printer
 """
 
 from __future__ import print_function
-import RPi.GPIO as GPIO
 import subprocess
 import time
 import socket
 #import textwrap
+from button import *
+from squid import *
 from Adafruit_Thermal import *
 
-LED_PIN = 18
-BUTTON_PIN = 23
-HOLD_TIME = 2     # Duration for button hold (shutdown)
-TAP_TIME = 0.01  # Debounce time for button taps
+LED = Squid(18, 23, 24)
+BUTTON = Button(25, debounce=0.1)
 PRINTER = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
 def tap():
@@ -119,13 +118,10 @@ def main():
     """
 
     # GPIO setup
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(LED_PIN, GPIO.OUT)
-    GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.output(LED_PIN, GPIO.HIGH)
+    LED.set_color(GREEN)
     time.sleep(30)
     greet()
-    GPIO.output(LED_PIN, GPIO.LOW)
+    LED.set_color(BLUE)	
 
     # Poll initial button state and time
     prev_button_state = GPIO.input(BUTTON_PIN)
@@ -135,39 +131,8 @@ def main():
 
     # Main loop
     while True:
-
-        # Poll current button state and time
-        button_state = GPIO.input(BUTTON_PIN)
-        current_time = time.time()
-
-        # Has button state changed?
-        if button_state != prev_button_state:
-            prev_button_state = button_state   # Yes, save new state/time
-            prev_time = current_time
-        else:                             # Button state unchanged
-            if (current_time - prev_time) >= HOLD_TIME:  # Button held more than 'HOLD_TIME'?
-                # Yes it has.  Is the hold action as-yet untriggered?
-                if hold_enable is True:        # Yep!
-                    hold()                      # Perform hold action (usu. shutdown)
-                    hold_enable = False          # 1 shot...don't repeat hold action
-                    tap_enable = False          # Don't do tap action on release
-            elif (current_time - prev_time) >= TAP_TIME:  # Not HOLD_TIME.  TAP_TIME elapsed?
-                # Yes.  Debounced press or release...
-                if button_state is True:       # Button released?
-                    if tap_enable is True:       # Ignore if prior hold()
-                        tap()                     # Tap triggered (button released)
-                        tap_enable = False        # Disable tap and hold
-                        hold_enable = False
-                else:                         # Button pressed
-                    tap_enable = True           # Enable tap and hold actions
-                    hold_enable = True
-
-        # LED blinks while idle, for a brief interval every 2 seconds.
-        if ((int(current_time) & 1) == 0) and ((current_time - int(current_time)) < 0.15):
-            GPIO.output(LED_PIN, GPIO.HIGH)
-        else:
-            GPIO.output(LED_PIN, GPIO.LOW)
-
+	if BUTTON.is_pressed():
+	    print_poem()
 
 # Initialization
 if __name__ == '__main__':
