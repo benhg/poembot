@@ -18,7 +18,7 @@ from __future__ import print_function
 import subprocess
 import time
 import socket
-#import textwrap
+import textwrap
 from button import *
 from squid import *
 from Adafruit_Thermal import *
@@ -93,24 +93,25 @@ def print_poem():
     Selects a poem based on the day of the month, looks for the corresponding
     file in the poems directory, formats the author and title, and prints it.
     """
+    day = time.strftime("%m/%d/%Y").split("/")[1]
+    poem_path = "poems/" + day + ".txt"
     try:
-        day = time.strftime("%m/%d/%Y").split("/")[1]
-        poem_path = "poems/" + day + ".txt"
         with open(poem_path) as poem_file:
             poem_lines = poem_file.read().splitlines()
-        title = poem_lines.pop(0)
-        author = poem_lines.pop(0)
-        PRINTER.setSize('M')
-        PRINTER.println(title)
-        PRINTER.setSize('M')
-        PRINTER.println(author)
-        PRINTER.setSize('S')
-        for line in poem_lines:
-            PRINTER.println(line)
-        PRINTER.feed(3)
     except IOError as error:
         PRINTER.println(error)
         PRINTER.feed(3)
+    title = textwrap.fill(poem_lines.pop(0), width=32)
+    author = textwrap.fill(poem_lines.pop(0), width=32)
+    poem = ""
+    for line in poem_lines:
+        poem += textwrap.fill(line, width=32, subsequent_indent="    ") + "\n"
+    PRINTER.setSize('M')
+    PRINTER.println(title)
+    PRINTER.setSize('S')
+    PRINTER.println(author)
+    PRINTER.println(poem)
+    PRINTER.feed(3)
 
 
 def main():
