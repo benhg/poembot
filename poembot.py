@@ -93,21 +93,24 @@ def print_poem():
     Selects a poem based on the day of the month, looks for the corresponding
     file in the poems directory, formats the author and title, and prints it.
     """
-
-    day = time.strftime("%m/%d/%Y").split("/")[1]
-    poem_path = "poems/" + day + ".txt"
-    with open(poem_path) as poem_file:
-        poem_lines = poem_file.read().splitlines()
-    title = poem_lines.pop(0)
-    author = poem_lines.pop(1)
-    PRINTER.setSize('M')
-    PRINTER.println(title)
-    PRINTER.setSize('M')
-    PRINTER.println(author + "\n")
-    PRINTER.setSize('S')
-    for line in poem_lines:
-        PRINTER.println(line)
-    PRINTER.feed(3)
+    try:
+        day = time.strftime("%m/%d/%Y").split("/")[1]
+        poem_path = "poems/" + day + ".txt"
+        with open(poem_path) as poem_file:
+            poem_lines = poem_file.read().splitlines()
+        title = poem_lines.pop(0)
+        author = poem_lines.pop(1)
+        PRINTER.setSize('M')
+        PRINTER.println(title)
+        PRINTER.setSize('M')
+        PRINTER.println(author + "\n")
+        PRINTER.setSize('S')
+        for line in poem_lines:
+            PRINTER.println(line)
+        PRINTER.feed(3)
+    except IOError as error:
+        PRINTER.println(error)
+        PRINTER.feed(3)
 
 
 def main():
