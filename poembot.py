@@ -33,9 +33,9 @@ def tap():
 
     Calls print_poem().
     """
-    LED.set_color(GREEN)
+    LED.set_color(YELLOW)
     print_poem()
-    LED.set_color(BLUE)
+    LED.set_color(GREEN)
 
 
 def hold():
@@ -43,9 +43,9 @@ def hold():
 
     Calls shutdown().
     """
-    LED.set_color(GREEN)
+    LED.set_color(YELLOW)
     shutdown()
-    LED.set_color(BLUE)
+    LED.set_color(GREEN)
 
 
 def greet():
@@ -95,7 +95,7 @@ def print_poem():
     """
 
     day = time.strftime("%m/%d/%Y").split("/")[1]
-    poem_path = "allpoems/poems/" + day + ".txt"
+    poem_path = "poems/" + day + ".txt"
     with open(poem_path) as poem_file:
         poem_lines = poem_file.read().splitlines()
     title = poem_lines.pop(0)
@@ -113,22 +113,22 @@ def print_poem():
 def main():
     """Main loop. Called when Poembot is powered on.
 
-    Waits a short time for Poembot to startup, then calls greet() and monitors
+    Waits a short time for Poembot to boot up, then calls greet() and monitors
     the button for short or long presses, calling tap() or hold() depending on
     the length of the press.
     """
 
-    # GPIO setup
-    LED.set_color(GREEN)
+    LED.set_color(RED)
     time.sleep(30)
+    LED.set_color(YELLOW)
     greet()
-    LED.set_color(BLUE)
+    LED.set_color(GREEN)
 
-    # Main loop
     while True:
         if BUTTON.is_pressed():
+            LED.set_color(YELLOW)
             print_poem()
-
+            LED.set_color(GREEN)
 
 # Initialization
 if __name__ == '__main__':
