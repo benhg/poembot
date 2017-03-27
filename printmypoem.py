@@ -23,10 +23,10 @@ choice = random.randint(0, len(poems))
 poem = poems[choice]
 
 # Get the title and author
-with open('poems/'+poem) as f:
+with open('poems/LordRandall_Anonymous.txt') as f:
 	lines = f.read().splitlines()
 title = lines.pop(0)
-author = lines.pop(1)
+author = lines.pop(0)
 
 # Open connection to printer and print poem
 printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
