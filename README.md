@@ -23,4 +23,4 @@ The Raspberry Pi is configured to run `start.sh` as a `cron` job at startup, whi
 
 ## License
 
-PoemBot is offered under an MIT license. You are free to use the code for any purpose you choose.
+PoemBot is offered under an MIT license. You are free to use the code for any purpose you choose. All poems included are free of copyright.
