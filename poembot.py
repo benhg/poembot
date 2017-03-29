@@ -131,6 +131,7 @@ def main():
 
     LED.set_color(RED)
     PRINTER.online()
+    time.sleep(10)
     LED.set_color(YELLOW)
     greet()
     LED.set_color(GREEN)
