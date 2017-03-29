@@ -4,14 +4,13 @@
 """ Main script for Watzek PoemBot.  Monitors button
 for taps/holds and prints a poem selected for the day of the month.
 
-MUST BE RUN AS ROOT (due to GPIO access)
-
-Required software includes Adafruit_Thermal and PySerial
+Required software includes Adafruit_Thermal and Monk Makes Squid/Button
 libraries. Other libraries used are part of stock Python install.
 
 Resources:
 https://github.com/evanwill/poemBot Evan Will's PoemBot
 http://www.adafruit.com/products/597 Mini Thermal Receipt Printer
+https://github.com/simonmonk/squid Simon Monk's Squid & Libraries
 """
 
 from __future__ import print_function
@@ -29,7 +28,7 @@ PRINTER = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
 
 def tap():
-    """Called when button is briefly tapped.
+    """ Called when button is briefly tapped.
 
     Calls print_poem().
     """
@@ -39,7 +38,7 @@ def tap():
 
 
 def hold():
-    """Called when the button is held down.
+    """ Called when the button is held down.
 
     Calls shutdown().
     """
@@ -49,7 +48,7 @@ def hold():
 
 
 def greet():
-    """Called on startup of Poembot, in main().
+    """ Called on startup of Poembot, in main().
 
     Prints a greeting message and then attempts to determine Poembot's network
     address and print it, with instructions to connect to Poembot remotely.
@@ -79,7 +78,7 @@ def greet():
 
 
 def shutdown():
-    """Called on a long press of the button, in hold().
+    """ Called on a long press of the button, in hold().
 
     Prints a goodbye message and shuts down Poembot.
     """
@@ -93,7 +92,7 @@ def shutdown():
 
 
 def print_poem():
-    """Called on a short press of the button, in main().
+    """ Called on a short press of the button, in main().
 
     Selects a poem based on the day of the month, looks for the corresponding
     file in the poems directory, formats the author and title, and prints it.
@@ -123,7 +122,7 @@ def print_poem():
 
 
 def main():
-    """Main loop. Called when Poembot is powered on.
+    """ Main loop. Called when Poembot is powered on.
 
     Waits a short time for Poembot to boot up, then calls greet() and monitors
     the button for short or long presses, calling tap() or hold() depending on

@@ -90,3 +90,6 @@ ENV/
 
 # 3d files
 *.skp
+
+# Libraries
+squid/
