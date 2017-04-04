@@ -38,6 +38,7 @@ def tap():
 
 
 def hold():
+    # TODO implement
     """ Called when the button is held down.
 
     Calls shutdown().
@@ -111,6 +112,8 @@ def print_poem():
     poem = ""
     for line in poem_lines:
         poem += textwrap.fill(line, width=42, subsequent_indent="  ") + "\n"
+    PRINTER.println("Today's poem: " + time.strftime("%m/%d/%Y"))
+    PRINTER.feed(1)
     PRINTER.boldOn()
     PRINTER.println(title)
     PRINTER.boldOff()
