@@ -51,4 +51,7 @@ def print_poem(number):
     PRINTER.feed(3)
     PRINTER.sleep()
 
-print_poem('15')
+if __name__ == "__main__":
+    for i in range(1, 31):
+        print(i)
+        print_poem(str(i).zfill(2))
