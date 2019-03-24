@@ -21,6 +21,7 @@ import textwrap
 from button import *
 from squid import *
 from Adafruit_Thermal import *
+import random
 
 LED = Squid(18, 23, 24)
 BUTTON = Button(25, debounce=0.1)
