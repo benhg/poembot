@@ -92,6 +92,19 @@ def shutdown():
     subprocess.call(["shutdown", "-h", "now"])
 
 
+def print_secret_msg():
+    """With some probability, the printer will print a secret
+    'you win a prize' message
+    """
+    PRINTER.wake()
+    PRINTER.println("You found a golden ticket!")
+    PRINTER.println("Bring this to the")
+    PRINTER.println("Circulation Desk to claim")
+    PRINTER.println("Your prize")
+    PRINTER.feed(3)
+    PRINTER.sleep()
+
+
 def print_poem():
     """ Called on a short press of the button, in main().
 
@@ -142,8 +155,13 @@ def main():
     while True:
         if BUTTON.is_pressed():
             LED.set_color(YELLOW)
-            print_poem()
+            winchance = random.random()
+            if winchance > .9:
+                print_secret_msg()
+            else:
+                print_poem()
             LED.set_color(GREEN)
+
 
 # Initialization
 if __name__ == '__main__':
