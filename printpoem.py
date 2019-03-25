@@ -12,7 +12,8 @@ https://github.com/evanwill/poemBot Evan Will's PoemBot
 http://www.adafruit.com/products/597 Mini Thermal Receipt Printer
 https://github.com/simonmonk/squid Simon Monk's Squid & Libraries
 """
-
+import sys
+import time
 import textwrap
 from button import *
 from squid import *
@@ -42,9 +43,7 @@ def print_poem(number):
     poem = ""
     for line in poem_lines:
         poem += textwrap.fill(line, width=42, subsequent_indent="  ") + "\n"
-    PRINTER.boldOn()
     PRINTER.println(title)
-    PRINTER.boldOff()
     PRINTER.println(author)
     PRINTER.writeBytes(0x1B, 0x21, 0x1)
     PRINTER.println(poem)
@@ -52,6 +51,6 @@ def print_poem(number):
     PRINTER.sleep()
 
 if __name__ == "__main__":
-    for i in range(1, 31):
-        print(i)
-        print_poem(str(i).zfill(2))
+    i = sys.argv[1]
+    print(i)
+    print_poem(str(i).zfill(2))
