@@ -98,10 +98,7 @@ def print_secret_msg():
     'you win a prize' message
     """
     PRINTER.wake()
-    PRINTER.println("You found a golden ticket!")
-    PRINTER.println("Bring this to the")
-    PRINTER.println("Circulation Desk to claim")
-    PRINTER.println("Your prize")
+    PRINTER.println(textwrap.fill("You found a golden ticket! \n\n Bring this to the circulation desk to claim your prize!", width=32))
     PRINTER.feed(5)
     PRINTER.sleep()
 
