@@ -128,9 +128,9 @@ def print_poem():
         poem += textwrap.fill(line, width=42, subsequent_indent="  ") + "\n"
     PRINTER.println("Today's poem: " + time.strftime("%m/%d/%Y"))
     PRINTER.feed(1)
-    PRINTER.boldOn()
+    
     PRINTER.println(title)
-    PRINTER.boldOff()
+    
     PRINTER.println(author)
     PRINTER.writeBytes(0x1B, 0x21, 0x1)
     PRINTER.println(poem)
