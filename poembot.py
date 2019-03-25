@@ -102,7 +102,7 @@ def print_secret_msg():
     PRINTER.println("Bring this to the")
     PRINTER.println("Circulation Desk to claim")
     PRINTER.println("Your prize")
-    PRINTER.feed(3)
+    PRINTER.feed(5)
     PRINTER.sleep()
 
 
@@ -157,7 +157,7 @@ def main():
         if BUTTON.is_pressed():
             LED.set_color(YELLOW)
             winchance = random.random()
-            if winchance > .9:
+            if winchance > 0:
                 print_secret_msg()
             else:
                 print_poem()
